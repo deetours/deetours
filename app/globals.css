@@ -1,0 +1,108 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: #F4F4F2;
+  /* Alabaster off-white */
+  --color-text-dark: #121212;
+  /* Deep Onyx */
+  --color-primary-dark: #0A0A0A;
+  /* Midnight Black */
+  --color-accent-luxury: #A68A56;
+  /* Muted Gold */
+  --color-accent-adventure: #2A3B38;
+  /* Forest Onyx */
+
+  --font-hero: var(--font-playfair-display), "Times New Roman", Times, serif;
+  --font-body: var(--font-inter), "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+
+  --text-hero: clamp(3rem, 8vw, 6rem);
+  --text-section: clamp(2rem, 5vw, 4rem);
+  --text-subheading: clamp(1.25rem, 3vw, 2rem);
+  --text-body: 1.125rem;
+  --text-small: 0.875rem;
+
+  --spacing-section: clamp(6rem, 15vw, 12rem);
+  --spacing-component: 32px;
+}
+
+@layer base {
+
+  *,
+  :active,
+  ::before,
+  ::after {
+    border-color: var(--color-gray-200, currentColor);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-text-dark);
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3,
+  .hero-text {
+    font-family: var(--font-hero);
+    color: var(--color-primary-dark);
+    letter-spacing: -0.04em;
+    line-height: 1.1;
+  }
+}
+
+@layer utilities {
+  .noise {
+    position: absolute;
+    inset: 0;
+    z-index: 50;
+    pointer-events: none;
+    opacity: 0.4;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .title-clip {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+  }
+}
+
+@layer base {
+
+  *,
+  :active,
+  ::before,
+  ::after {
+    border-color: var(--color-gray-200, currentColor);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-text-dark);
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3,
+  .hero-text {
+    font-family: var(--font-hero);
+    color: var(--color-primary-dark);
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
