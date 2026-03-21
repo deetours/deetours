@@ -19,11 +19,11 @@ const TOTAL_STEPS = AGENT_STEPS.length; // 6 including contact
 
 function TypingIndicator() {
     return (
-        <div className="flex items-center gap-1.5 px-5 py-4">
+        <div className="flex items-center gap-1.5 px-6 py-5">
             {[0, 1, 2].map((i) => (
                 <motion.span
                     key={i}
-                    className="w-1.5 h-1.5 rounded-full bg-accent-luxury"
+                    className="w-1.5 h-1.5 rounded-full bg-foreground/50"
                     animate={{ opacity: [0.3, 1, 0.3], y: [0, -4, 0] }}
                     transition={{ duration: 0.9, repeat: Infinity, delay: i * 0.18 }}
                 />
@@ -37,14 +37,14 @@ function AgentBubble({ text, delay = 0 }: { text: string; delay?: number }) {
         <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.6, delay, ease: [0.16, 1, 0.3, 1] }}
             className="flex items-start gap-4 max-w-[85%]"
         >
             {/* Avatar */}
-            <div className="shrink-0 w-9 h-9 rounded-full bg-accent-luxury/20 border border-accent-luxury/30 flex items-center justify-center">
-                <span className="text-accent-luxury text-xs font-hero">D</span>
+            <div className="shrink-0 w-10 h-10 rounded-full bg-surface-1 border border-border-subtle flex items-center justify-center">
+                <span className="text-foreground text-xs font-hero">D</span>
             </div>
-            <div className="bg-white/5 border border-white/10 rounded-2xl rounded-tl-none px-6 py-4 text-white/80 text-base font-light leading-relaxed backdrop-blur-sm">
+            <div className="bg-surface-1 border border-border-subtle rounded-2xl rounded-tl-none px-6 py-4 text-border-strong text-lg font-light leading-relaxed backdrop-blur-sm">
                 {text}
             </div>
         </motion.div>
@@ -56,10 +56,10 @@ function UserBubble({ text }: { text: string }) {
         <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             className="flex justify-end"
         >
-            <div className="bg-accent-luxury/20 border border-accent-luxury/30 rounded-2xl rounded-tr-none px-6 py-3 text-white text-sm font-medium max-w-[70%] backdrop-blur-sm">
+            <div className="bg-foreground text-background rounded-2xl rounded-tr-none px-6 py-4 text-sm font-medium max-w-[70%] backdrop-blur-sm">
                 {text}
             </div>
         </motion.div>
@@ -74,7 +74,7 @@ function ProgressBar({ current, total }: { current: number; total: number }) {
                     key={i}
                     className={cn(
                         "h-0.5 rounded-full transition-all duration-700",
-                        i < current ? "bg-accent-luxury" : "bg-white/15"
+                        i < current ? "bg-foreground" : "bg-border-subtle"
                     )}
                     animate={{ width: i < current ? 28 : 16 }}
                     initial={false}
@@ -89,45 +89,45 @@ function ConfirmationScene({ data }: { data: SessionData }) {
         <motion.div
             initial={{ opacity: 0, scale: 0.97 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-            className="flex flex-col items-center justify-center gap-10 text-center py-12"
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            className="flex flex-col items-center justify-center gap-12 text-center py-16"
         >
             {/* Icon */}
             <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ type: "spring", stiffness: 200, damping: 18, delay: 0.3 }}
-                className="w-20 h-20 rounded-full bg-accent-luxury/10 border border-accent-luxury/30 flex items-center justify-center"
+                className="w-24 h-24 rounded-full bg-surface-1 border border-border-subtle flex items-center justify-center"
             >
-                <Check className="w-8 h-8 text-accent-luxury" />
+                <Check className="w-10 h-10 text-foreground" />
             </motion.div>
 
-            <div className="space-y-4">
+            <div className="space-y-6">
                 <motion.p
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.5 }}
-                    className="text-[10px] uppercase tracking-[0.5em] text-accent-luxury"
+                    className="text-[0.6rem] uppercase tracking-[0.5em] text-muted"
                 >
-                    Your Journey Has Begun
+                    Application Received
                 </motion.p>
                 <motion.h2
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.65, duration: 1, ease: [0.22, 1, 0.36, 1] }}
-                    className="font-hero text-[clamp(3rem,8vw,5.5rem)] leading-[0.9] tracking-tighter text-white text-balance"
+                    transition={{ delay: 0.65, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                    className="font-hero text-[clamp(4rem,8vw,6rem)] leading-[0.85] tracking-tighter text-foreground text-balance"
                 >
                     {data.name ? `Thank you,` : "Thank you."}<br />
-                    {data.name && <span className="italic text-accent-luxury font-light">{data.name}.</span>}
+                    {data.name && <span className="italic text-muted font-light">{data.name}.</span>}
                 </motion.h2>
                 <motion.p
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.9 }}
-                    className="text-white/50 font-light max-w-sm mx-auto text-lg leading-relaxed"
+                    className="text-border-strong font-light max-w-md mx-auto text-xl leading-relaxed"
                 >
                     Deepa will personally reach out to{" "}
-                    <span className="text-white/80">{data.phone}</span> within 24 hours with a curated proposal designed just for you.
+                    <span className="text-foreground">{data.phone}</span> within 24 hours.
                 </motion.p>
             </div>
 
@@ -136,9 +136,9 @@ function ConfirmationScene({ data }: { data: SessionData }) {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.1, duration: 0.8 }}
-                className="w-full max-w-sm bg-white/5 border border-white/10 rounded-2xl p-6 text-left space-y-4"
+                className="w-full max-w-sm bg-surface-1 border border-border-subtle rounded-2xl p-8 text-left space-y-6"
             >
-                <p className="text-[9px] uppercase tracking-[0.4em] text-white/30 mb-4">Your Preferences</p>
+                <p className="text-[0.55rem] uppercase tracking-[0.4em] text-muted mb-6">Application Details</p>
                 {[
                     { label: "Interest", value: data.experience },
                     { label: "Travelling", value: data.group },
@@ -147,9 +147,9 @@ function ConfirmationScene({ data }: { data: SessionData }) {
                 ]
                     .filter((r) => r.value)
                     .map((r) => (
-                        <div key={r.label} className="flex justify-between text-sm">
-                            <span className="text-white/30 font-light">{r.label}</span>
-                            <span className="text-white/80 capitalize">{r.value?.replace(/_/g, " ")}</span>
+                        <div key={r.label} className="flex justify-between text-sm items-center border-b border-border-subtle/50 pb-4 last:border-0 last:pb-0">
+                            <span className="text-muted text-xs font-light">{r.label}</span>
+                            <span className="text-foreground capitalize font-medium">{r.value?.replace(/_/g, " ")}</span>
                         </div>
                     ))}
             </motion.div>
@@ -158,22 +158,22 @@ function ConfirmationScene({ data }: { data: SessionData }) {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1.4 }}
-                className="flex flex-col items-center gap-4"
+                className="flex flex-col items-center gap-8 mt-8"
             >
                 <a
                     href={`tel:${OWNER.phone}`}
-                    className="flex items-center gap-3 text-accent-luxury hover:opacity-70 transition-opacity"
+                    className="flex items-center gap-3 text-border-strong hover:text-foreground transition-colors"
                 >
                     <Phone className="w-4 h-4" />
-                    <span className="text-[11px] uppercase tracking-[0.2em]">
-                        Can't wait? Call {OWNER.phone}
+                    <span className="text-[0.6rem] uppercase tracking-[0.3em]">
+                        Urgent? Call {OWNER.phone}
                     </span>
                 </a>
                 <Link
                     href="/"
-                    className="text-[10px] uppercase tracking-[0.3em] text-white/30 hover:text-white/60 transition-colors"
+                    className="text-[0.6rem] uppercase tracking-[0.4em] text-muted hover:text-foreground transition-colors flex items-center gap-3"
                 >
-                    ← Return Home
+                    <ArrowLeft className="w-4 h-4" /> Return to Origin
                 </Link>
             </motion.div>
         </motion.div>
@@ -219,10 +219,9 @@ export default function BookingPage() {
     function handleChoice(label: string, value: string) {
         const key = currentStep.dataKey!;
         setSessionData((prev) => ({ ...prev, [key]: value }));
-        setHistory((prev) => [...prev.slice(0, -0), { ...prev[prev.length - 1] }, { agent: prev[prev.length - 1]?.agent ?? "", user: label }]);
-        setHistory((h) => {
-            const last = h[h.length - 1];
-            return [...h.slice(0, -1), { ...last, user: label }];
+        setHistory((prev) => {
+            const last = prev[prev.length - 1];
+            return [...prev.slice(0, -1), { ...last, user: label }];
         });
         setShowChoices(false);
         setTimeout(() => {
@@ -241,24 +240,19 @@ export default function BookingPage() {
         setIsSubmitting(true);
         setSessionData((prev) => ({ ...prev, ...inputValues }));
 
-        // Simulate handoff — in production, POST to an API route that triggers WhatsApp agent
+        // Simulate handoff
         await new Promise((r) => setTimeout(r, 1800));
         setIsComplete(true);
         setIsSubmitting(false);
     }
 
     return (
-        <main className="min-h-screen bg-primary-dark relative overflow-x-hidden">
+        <main className="min-h-screen bg-background text-foreground relative overflow-x-hidden selection:bg-foreground selection:text-background">
             <Navigation />
-            <div className="noise" />
+            <div className="noise mix-blend-overlay opacity-20 pointer-events-none fixed inset-0 z-0" />
 
-            {/* Ambient background glow */}
-            <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent-luxury/5 rounded-full blur-[120px]" />
-            </div>
-
-            <div className="relative z-10 min-h-screen flex flex-col pt-28 pb-16 px-4 md:px-8">
-                <div className="w-full max-w-2xl mx-auto flex flex-col flex-1">
+            <div className="relative z-10 min-h-screen flex flex-col pt-32 pb-24 px-4 md:px-8">
+                <div className="w-full max-w-3xl mx-auto flex flex-col flex-1">
 
                     {/* Header */}
                     <AnimatePresence>
@@ -267,15 +261,15 @@ export default function BookingPage() {
                                 initial={{ opacity: 0, y: -10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: -10 }}
-                                className="flex items-center justify-between mb-10"
+                                className="flex items-center justify-between mb-16 pb-8 border-b border-border-subtle"
                             >
-                                <Link href="/" className="flex items-center gap-3 text-white/40 hover:text-white/70 transition-colors">
+                                <Link href="/" className="flex items-center gap-3 text-muted hover:text-foreground transition-colors">
                                     <ArrowLeft className="w-4 h-4" />
-                                    <span className="text-[10px] uppercase tracking-[0.3em]">Back</span>
+                                    <span className="text-[0.6rem] uppercase tracking-[0.4em]">Abort</span>
                                 </Link>
-                                <div className="flex flex-col items-center gap-3">
-                                    <p className="text-[9px] uppercase tracking-[0.5em] text-white/30">
-                                        Step {Math.min(currentStepIndex + 1, TOTAL_STEPS)} of {TOTAL_STEPS}
+                                <div className="flex flex-col items-center gap-4">
+                                    <p className="text-[0.6rem] uppercase tracking-[0.5em] text-muted">
+                                        Phase {Math.min(currentStepIndex + 1, TOTAL_STEPS)} of {TOTAL_STEPS}
                                     </p>
                                     <ProgressBar current={currentStepIndex + 1} total={TOTAL_STEPS} />
                                 </div>
@@ -285,7 +279,7 @@ export default function BookingPage() {
                     </AnimatePresence>
 
                     {/* Chat Area */}
-                    <div className="flex-1 flex flex-col gap-6 min-h-0">
+                    <div className="flex-1 flex flex-col gap-8 min-h-0">
 
                         {isComplete ? (
                             <ConfirmationScene data={{ ...sessionData, ...inputValues }} />
@@ -293,7 +287,7 @@ export default function BookingPage() {
                             <>
                                 {/* History — past steps */}
                                 {history.slice(0, -1).map((item, i) => (
-                                    <div key={i} className="flex flex-col gap-4 opacity-40">
+                                    <div key={i} className="flex flex-col gap-6 opacity-50">
                                         <AgentBubble text={item.agent} />
                                         {item.user && <UserBubble text={item.user} />}
                                     </div>
@@ -301,7 +295,7 @@ export default function BookingPage() {
 
                                 {/* Current agent message */}
                                 {history.length > 0 && (
-                                    <div className="flex flex-col gap-4">
+                                    <div className="flex flex-col gap-6">
                                         <AgentBubble text={history[history.length - 1].agent} />
                                         {history[history.length - 1].user && (
                                             <UserBubble text={history[history.length - 1].user!} />
@@ -318,10 +312,10 @@ export default function BookingPage() {
                                             exit={{ opacity: 0 }}
                                             className="flex items-start gap-4"
                                         >
-                                            <div className="shrink-0 w-9 h-9 rounded-full bg-accent-luxury/20 border border-accent-luxury/30 flex items-center justify-center">
-                                                <span className="text-accent-luxury text-xs font-hero">D</span>
+                                            <div className="shrink-0 w-10 h-10 rounded-full bg-surface-1 border border-border-subtle flex items-center justify-center">
+                                                <span className="text-foreground text-xs font-hero">D</span>
                                             </div>
-                                            <div className="bg-white/5 border border-white/10 rounded-2xl rounded-tl-none backdrop-blur-sm">
+                                            <div className="bg-surface-1 border border-border-subtle rounded-2xl rounded-tl-none backdrop-blur-sm">
                                                 <TypingIndicator />
                                             </div>
                                         </motion.div>
@@ -335,20 +329,20 @@ export default function BookingPage() {
                                             initial={{ opacity: 0, y: 16 }}
                                             animate={{ opacity: 1, y: 0 }}
                                             exit={{ opacity: 0 }}
-                                            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                                            className="flex flex-wrap gap-3 mt-2"
+                                            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                                            className="flex flex-wrap gap-4 mt-8"
                                         >
                                             {currentStep.choices?.map((choice, i) => (
                                                 <motion.button
                                                     key={choice.value}
                                                     initial={{ opacity: 0, y: 8 }}
                                                     animate={{ opacity: 1, y: 0 }}
-                                                    transition={{ delay: i * 0.07, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                                                    transition={{ delay: i * 0.07, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                                                     onClick={() => handleChoice(choice.label, choice.value)}
-                                                    className="group flex items-center gap-2 bg-white/5 hover:bg-accent-luxury/20 border border-white/10 hover:border-accent-luxury/50 text-white/70 hover:text-white rounded-full px-5 py-3 text-sm font-light transition-all duration-300 cursor-pointer"
+                                                    className="group flex items-center gap-3 bg-surface-1 hover:bg-foreground border border-border-subtle hover:border-foreground text-border-strong hover:text-background rounded-full px-6 py-4 text-sm font-light transition-all duration-500 cursor-pointer"
                                                 >
                                                     {choice.emoji && (
-                                                        <span className="text-accent-luxury text-xs group-hover:scale-125 transition-transform duration-300">
+                                                        <span className="group-hover:scale-125 transition-transform duration-500">
                                                             {choice.emoji}
                                                         </span>
                                                     )}
@@ -366,9 +360,9 @@ export default function BookingPage() {
                                             initial={{ opacity: 0, y: 16 }}
                                             animate={{ opacity: 1, y: 0 }}
                                             exit={{ opacity: 0 }}
-                                            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                                            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                                             onSubmit={handleContactSubmit}
-                                            className="flex flex-col gap-4 mt-2"
+                                            className="flex flex-col gap-6 mt-8 max-w-xl"
                                         >
                                             {currentStep.inputFields?.map((field, i) => (
                                                 <motion.div
@@ -376,11 +370,11 @@ export default function BookingPage() {
                                                     initial={{ opacity: 0, y: 10 }}
                                                     animate={{ opacity: 1, y: 0 }}
                                                     transition={{ delay: i * 0.1 }}
-                                                    className="flex flex-col gap-2"
+                                                    className="flex flex-col gap-3"
                                                 >
-                                                    <label className="text-[10px] uppercase tracking-[0.3em] text-white/40">
+                                                    <label className="text-[0.6rem] uppercase tracking-[0.4em] text-muted">
                                                         {field.label}
-                                                        {field.required && <span className="text-accent-luxury ml-1">*</span>}
+                                                        {field.required && <span className="text-foreground ml-2">*</span>}
                                                     </label>
                                                     <input
                                                         type={field.type || "text"}
@@ -390,7 +384,7 @@ export default function BookingPage() {
                                                             setInputValues((prev) => ({ ...prev, [field.key]: e.target.value }))
                                                         }
                                                         required={field.required}
-                                                        className="bg-white/5 border border-white/10 focus:border-accent-luxury/60 rounded-xl px-5 py-4 text-white placeholder:text-white/20 text-sm font-light outline-none transition-colors duration-300 backdrop-blur-sm"
+                                                        className="bg-surface-1 border border-border-subtle focus:border-foreground rounded-none px-4 py-5 text-foreground placeholder:text-border-subtle text-lg font-light outline-none transition-colors duration-500 backdrop-blur-sm"
                                                     />
                                                 </motion.div>
                                             ))}
@@ -402,28 +396,28 @@ export default function BookingPage() {
                                                 type="submit"
                                                 disabled={isSubmitting}
                                                 className={cn(
-                                                    "mt-2 w-full py-4 rounded-xl text-[11px] uppercase tracking-[0.3em] font-medium transition-all duration-500",
+                                                    "mt-8 w-full py-6 text-[0.65rem] uppercase tracking-[0.4em] font-medium transition-all duration-700",
                                                     isSubmitting
-                                                        ? "bg-accent-luxury/20 text-accent-luxury/60 cursor-wait"
-                                                        : "bg-accent-luxury text-primary-dark hover:bg-accent-luxury/80 cursor-pointer"
+                                                        ? "bg-surface-1 text-muted cursor-wait"
+                                                        : "bg-foreground text-background hover:bg-[#A3A3A3] cursor-pointer"
                                                 )}
                                             >
                                                 {isSubmitting ? (
-                                                    <span className="flex items-center justify-center gap-3">
+                                                    <span className="flex items-center justify-center gap-4">
                                                         <motion.span
                                                             animate={{ rotate: 360 }}
                                                             transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                                                            className="w-4 h-4 border-2 border-accent-luxury/30 border-t-accent-luxury rounded-full inline-block"
+                                                            className="w-4 h-4 border-2 border-border-subtle border-t-[#737373] rounded-full inline-block"
                                                         />
-                                                        Connecting you to Deepa...
+                                                        Transmitting...
                                                     </span>
                                                 ) : (
-                                                    "Begin My Journey →"
+                                                    "Submit Application →"
                                                 )}
                                             </motion.button>
 
-                                            <p className="text-[10px] text-white/20 text-center mt-1">
-                                                Your details are private. Deepa personally handles every enquiry.
+                                            <p className="text-[0.6rem] uppercase tracking-[0.3em] text-border-subtle text-center mt-4">
+                                                Highly Confidential.
                                             </p>
                                         </motion.form>
                                     )}
@@ -431,7 +425,7 @@ export default function BookingPage() {
                             </>
                         )}
 
-                        <div ref={bottomRef} />
+                        <div ref={bottomRef} className="h-24" />
                     </div>
                 </div>
             </div>
@@ -440,3 +434,4 @@ export default function BookingPage() {
         </main>
     );
 }
+

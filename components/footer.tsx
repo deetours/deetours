@@ -2,88 +2,51 @@
 
 import Link from "next/link";
 import { OWNER } from "@/lib/constants";
+import { ArrowRight } from "lucide-react";
 
 export function Footer() {
     return (
-        <footer className="bg-primary-dark text-white relative overflow-hidden">
-            <div className="noise" />
-            <div className="max-w-[1400px] mx-auto px-6 md:px-12 pt-32 pb-12 relative z-10 flex flex-col">
+        <footer className="bg-background text-foreground relative overflow-hidden flex flex-col justify-end min-h-[90vh] border-t border-border-strong transition-colors duration-500">
+            <div className="noise mix-blend-overlay opacity-30 pointer-events-none absolute inset-0" />
+            
+            <div className="w-full flex-grow flex flex-col items-center justify-center relative z-10 px-6 mt-32">
+                <p className="text-[0.6rem] uppercase tracking-[0.4em] text-border-strong mb-12">
+                    The Archive Is Open
+                </p>
+                
+                <h2 className="font-hero text-[clamp(4rem,10vw,12rem)] leading-[0.85] tracking-tighter text-foreground text-center max-w-[90vw]">
+                    The world is <br />
+                    <span className="italic font-light text-muted">waiting.</span>
+                </h2>
 
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-16 mb-24">
-                    {/* Brand + Newsletter */}
-                    <div className="md:col-span-5">
-                        <p className="font-hero text-2xl mb-2">DeeTours</p>
-                        <p className="text-[10px] uppercase tracking-[0.2em] text-accent-luxury mb-8">by {OWNER.name}</p>
-                        <p className="text-gray-400 font-light text-lg leading-relaxed max-w-sm mb-8">
-                            Orchestrating transformative journeys so you can simply arrive.
-                        </p>
-                        <form className="flex border-b border-gray-700 pb-2 max-w-sm group focus-within:border-white transition-colors">
-                            <input
-                                type="email"
-                                placeholder="Enter email for private dispatches"
-                                className="bg-transparent border-none text-white text-sm focus:ring-0 outline-none w-full placeholder:text-gray-600"
-                            />
-                            <button className="text-[10px] uppercase tracking-widest text-gray-400 group-hover:text-white transition-colors whitespace-nowrap">
-                                Subscribe
-                            </button>
-                        </form>
+                <Link href="/booking" className="mt-20 group flex items-center gap-6 active-scale">
+                    <span className="text-[0.7rem] uppercase tracking-[0.3em] text-foreground group-hover:text-border-strong transition-colors duration-500">
+                        Begin the Dialogue
+                    </span>
+                    <div className="w-12 h-[1px] bg-border-subtle relative overflow-hidden">
+                        <div className="absolute inset-0 bg-foreground -translate-x-[101%] group-hover:translate-x-0 transition-transform duration-700 ease-[0.16,1,0.3,1]" />
                     </div>
+                    <ArrowRight className="w-4 h-4 text-border-strong group-hover:text-foreground group-hover:translate-x-2 transition-all duration-700 ease-[0.16,1,0.3,1]" />
+                </Link>
+            </div>
 
-                    {/* Explore Links */}
-                    <div className="md:col-span-2 md:col-start-7">
-                        <h4 className="text-[10px] uppercase tracking-[0.2em] text-gray-600 mb-6">Explore</h4>
-                        <ul className="space-y-4">
-                            <li><Link href="/trips" className="text-gray-300 hover:text-white transition-colors text-sm">All Journeys</Link></li>
-                            <li><Link href="/destinations" className="text-gray-300 hover:text-white transition-colors text-sm">Destinations</Link></li>
-                            <li><Link href="/about" className="text-gray-300 hover:text-white transition-colors text-sm">The Studio</Link></li>
-                            <li><Link href="/blog" className="text-gray-300 hover:text-white transition-colors text-sm">Journal</Link></li>
-                        </ul>
-                    </div>
+            {/* Big Typographic Watermark */}
+            <div className="w-full flex justify-center mt-32 overflow-hidden relative z-10 border-b border-border-subtle">
+                <h1 className="font-hero text-[18vw] leading-[0.75] tracking-tighter text-border-subtle opacity-50 select-none text-center">
+                    DeeTours
+                </h1>
+            </div>
 
-                    {/* Connect Links */}
-                    <div className="md:col-span-3">
-                        <h4 className="text-[10px] uppercase tracking-[0.2em] text-gray-600 mb-6">Connect</h4>
-                        <ul className="space-y-4">
-                            <li>
-                                <a href={`tel:${OWNER.phone}`} className="text-gray-300 hover:text-white transition-colors text-sm">
-                                    {OWNER.phone}
-                                </a>
-                            </li>
-                            <li>
-                                <a href={`mailto:${OWNER.email}`} className="text-gray-300 hover:text-white transition-colors text-sm">
-                                    {OWNER.email}
-                                </a>
-                            </li>
-                            <li>
-                                <a href="https://instagram.com/deetours.in" target="_blank" rel="noreferrer" className="text-gray-300 hover:text-white transition-colors text-sm">
-                                    {OWNER.instagram}
-                                </a>
-                            </li>
-                            <li>
-                                <Link href="/contact" className="text-gray-300 hover:text-white transition-colors text-sm">
-                                    Request a Consultation
-                                </Link>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                {/* Big Typographic Watermark */}
-                <div className="w-full flex justify-center mt-auto overflow-hidden">
-                    <h1 className="font-hero text-[15vw] leading-[0.8] tracking-tighter text-white/5 select-none text-center">
-                        DeeTours
-                    </h1>
-                </div>
-
-                {/* Legal Bar */}
-                <div className="pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] uppercase tracking-widest text-gray-600 mt-12 border-t border-gray-900">
-                    <p>© {new Date().getFullYear()} DeeTours Studio. Founded by {OWNER.name}.</p>
-                    <div className="flex gap-8">
-                        <span>Bengaluru, India</span>
-                        <Link href="/contact" className="hover:text-white transition-colors">Contact</Link>
-                    </div>
+            {/* Legal Bar */}
+            <div className="w-full relative z-10 px-6 py-8 md:px-12 flex flex-col md:flex-row justify-between items-center gap-4 text-[0.6rem] uppercase tracking-[0.2em] text-muted bg-background">
+                <p>© {new Date().getFullYear()} DeeTours Studio. By {OWNER.name}.</p>
+                <div className="flex gap-12">
+                    <span>Bengaluru, India</span>
+                    <a href="https://instagram.com/deetours.in" target="_blank" rel="noreferrer" className="hover:text-foreground transition-colors active-scale">Instagram</a>
+                    <Link href="/booking" className="hover:text-foreground transition-colors active-scale">Contact</Link>
                 </div>
             </div>
         </footer>
     );
 }
+

@@ -7,23 +7,24 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { OWNER, JOURNAL_POSTS } from "@/lib/constants";
-import { ArrowLeft, Clock, Calendar, User } from "lucide-react";
+import { ArrowLeft, User } from "lucide-react";
 
 export default function JournalDetailPage() {
     const params = useParams();
     const post = JOURNAL_POSTS.find((p) => p.slug === params.slug);
 
     const { scrollYProgress } = useScroll();
-    const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
-    const scale = useTransform(scrollYProgress, [0, 0.2], [1, 1.1]);
+    const opacity = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
+    const scale = useTransform(scrollYProgress, [0, 0.4], [1, 1.1]);
+    const yText = useTransform(scrollYProgress, [0, 0.4], ["0%", "50%"]);
 
     if (!post) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-background">
+            <div className="min-h-screen flex items-center justify-center bg-background text-foreground">
                 <div className="text-center">
-                    <h1 className="font-hero text-4xl mb-6">Essay not found.</h1>
+                    <h1 className="font-hero text-4xl mb-6">Record missing.</h1>
                     <Link href="/blog">
-                        <span className="text-accent-luxury hover:underline">Return to Journal</span>
+                        <span className="text-border-strong hover:text-foreground transition-colors uppercase tracking-[0.2em] text-[0.6rem]">Return to Archives</span>
                     </Link>
                 </div>
             </div>
@@ -31,87 +32,80 @@ export default function JournalDetailPage() {
     }
 
     return (
-        <main className="min-h-screen bg-background relative selection:bg-accent-luxury selection:text-white">
+        <main className="min-h-screen bg-background text-foreground relative selection:bg-foreground selection:text-background">
             <Navigation />
 
-            {/* Cinematic Hero */}
-            <section className="relative h-[80vh] w-full overflow-hidden bg-primary-dark">
-                <motion.div style={{ opacity, scale }} className="absolute inset-0 w-full h-full">
+            {/* Cinematic Hero - ALWAYS DARK FOR PHOTO PARITY */}
+            <section className="relative h-[90vh] w-full overflow-hidden bg-[#111111]">
+                <motion.div style={{ opacity, scale }} className="absolute inset-0 w-full h-[120%] origin-center">
                     <Image
                         src={post.image}
                         alt={post.title}
                         fill
-                        className="object-cover opacity-60"
+                        className="object-cover opacity-50 grayscale-[20%] contrast-[1.2]"
                         priority
                     />
                 </motion.div>
 
-                {/* Contrast Scrims */}
-                <div className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-black/80 to-transparent z-10 pointer-events-none" />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary-dark via-transparent to-transparent z-10" />
-                <div className="noise z-20" />
+                {/* Strict Dark Scrims */}
+                <div className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-[#0A0A0A]/90 to-transparent z-10 pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/40 to-transparent z-10" />
+                <div className="noise mix-blend-overlay opacity-30 z-20 pointer-events-none absolute inset-0" />
 
-                <div className="absolute inset-0 flex flex-col items-center justify-center z-20 text-white p-6 md:p-12 mt-20">
+                <div className="absolute inset-0 flex flex-col items-center justify-end z-30 p-6 md:p-12 pb-32">
                     <motion.div
-                        initial={{ opacity: 0, y: 20 }}
+                        style={{ y: yText }}
+                        initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-                        className="flex items-center gap-6 mb-8"
+                        transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
+                        className="w-full max-w-5xl"
                     >
-                        <span className="text-[10px] uppercase tracking-[0.3em] text-accent-luxury">{post.category}</span>
-                        <span className="w-1 h-1 rounded-full bg-white/30" />
-                        <span className="text-[10px] uppercase tracking-[0.3em] text-white/60">{post.readTime}</span>
-                    </motion.div>
+                        <div className="flex items-center gap-6 mb-8 justify-center">
+                            <span className="text-[0.6rem] uppercase tracking-[0.4em] text-[#FAFAFA] opacity-80">{post.category}</span>
+                            <span className="w-1 h-1 rounded-full bg-[#FAFAFA]" />
+                            <span className="text-[0.6rem] uppercase tracking-[0.3em] text-[#A3A3A3]">{post.readTime}</span>
+                        </div>
 
-                    <motion.h1
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-                        className="font-hero text-[clamp(2.5rem,7vw,6.5rem)] leading-[0.9] tracking-tighter text-center max-w-5xl text-balance"
-                    >
-                        {post.title}
-                    </motion.h1>
+                        <h1 className="font-hero text-[clamp(2.5rem,7vw,7rem)] leading-[0.85] tracking-tighter text-center text-balance text-[#FAFAFA]" style={{ fontWeight: 300 }}>
+                            {post.title}
+                        </h1>
+                    </motion.div>
                 </div>
             </section>
 
             {/* Reading Experience */}
-            <section className="relative z-30 -mt-20 px-6">
-                <div className="max-w-3xl mx-auto bg-background p-8 md:p-20 shadow-2xl relative">
-                    <div className="noise opacity-20" />
-
-                    <div className="flex flex-wrap items-center justify-between gap-8 mb-16 pb-8 border-b border-gray-100">
-                        <div className="flex items-center gap-4">
-                            <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-primary-dark">
-                                <User className="w-5 h-5" />
-                            </div>
+            <section className="relative z-30 px-6 mt-16 md:mt-32">
+                <div className="max-w-[800px] mx-auto">
+                    <div className="flex flex-wrap items-center justify-between gap-8 mb-24 pb-12 border-b border-border-subtle">
+                        <div className="flex items-center gap-6">
                             <div>
-                                <p className="text-[10px] uppercase tracking-[0.2em] text-gray-400">Written By</p>
-                                <p className="text-sm font-medium text-primary-dark">{post.author}</p>
+                                <p className="text-[0.6rem] uppercase tracking-[0.3em] text-muted mb-1">Authored By</p>
+                                <p className="text-sm font-medium text-foreground">{post.author}</p>
                             </div>
                         </div>
                         <div className="flex items-center gap-8">
                             <div>
-                                <p className="text-[10px] uppercase tracking-[0.2em] text-gray-400">Published</p>
-                                <p className="text-sm font-medium text-primary-dark">{post.date}</p>
+                                <p className="text-[0.6rem] uppercase tracking-[0.3em] text-muted mb-1">Published</p>
+                                <p className="text-sm font-medium text-foreground">{post.date}</p>
                             </div>
                         </div>
                     </div>
 
                     <div
-                        className="prose prose-lg prose-gray max-w-none 
-                        prose-headings:font-hero prose-headings:text-primary-dark prose-headings:tracking-tighter
-                        prose-p:text-gray-600 prose-p:font-light prose-p:leading-relaxed prose-p:mb-8
-                        prose-blockquote:border-accent-luxury prose-blockquote:text-2xl prose-blockquote:font-hero prose-blockquote:italic prose-blockquote:text-primary-dark prose-blockquote:font-light
+                        className="prose prose-lg dark:prose-invert max-w-none 
+                        prose-headings:font-hero prose-headings:text-foreground prose-headings:tracking-tighter prose-headings:font-normal
+                        prose-p:text-border-strong prose-p:font-light prose-p:leading-[1.8] prose-p:mb-10 prose-p:text-xl
+                        prose-blockquote:border-l-4 prose-blockquote:border-border-subtle prose-blockquote:pl-8 prose-blockquote:my-16 prose-blockquote:text-[clamp(1.5rem,3vw,2.5rem)] prose-blockquote:font-hero prose-blockquote:italic prose-blockquote:text-foreground prose-blockquote:font-normal prose-blockquote:leading-tight
+                        prose-a:text-foreground prose-a:underline prose-a:underline-offset-4 hover:prose-a:text-muted prose-a:transition-colors
                         "
                         dangerouslySetInnerHTML={{ __html: post.content }}
                     />
 
-                    <div className="mt-20 pt-12 border-t border-gray-100 flex flex-col items-center">
-                        <p className="text-[10px] uppercase tracking-[0.4em] text-gray-400 mb-8">End of Essay</p>
+                    <div className="mt-32 pt-16 border-t border-border-subtle flex flex-col items-center">
                         <Link href="/blog">
-                            <button className="group flex items-center gap-3 text-primary-dark hover:text-accent-luxury transition-colors duration-300">
-                                <ArrowLeft className="w-4 h-4 group-hover:-translate-x-2 transition-transform duration-500" />
-                                <span className="text-[10px] uppercase tracking-[0.2em] font-medium">Return to Journal</span>
+                            <button className="group flex items-center gap-4 text-muted hover:text-foreground transition-colors duration-500">
+                                <ArrowLeft className="w-5 h-5 group-hover:-translate-x-2 transition-transform duration-700 ease-[0.16,1,0.3,1]" />
+                                <span className="text-[0.6rem] uppercase tracking-[0.3em] font-medium">Return to The Archive</span>
                             </button>
                         </Link>
                     </div>
@@ -119,21 +113,22 @@ export default function JournalDetailPage() {
             </section>
 
             {/* More Essays Bottom Bar */}
-            <section className="py-32 px-6">
-                <div className="max-w-[1200px] mx-auto">
-                    <h3 className="text-[10px] uppercase tracking-[0.3em] text-gray-400 mb-16 text-center">Continue Reading</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <section className="py-48 px-6 border-t border-border-subtle mt-32 bg-surface-1">
+                <div className="max-w-[1600px] mx-auto">
+                    <h3 className="text-[0.65rem] uppercase tracking-[0.4em] text-muted mb-24 hidden md:block">Connected Records</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-16 lg:gap-32">
                         {JOURNAL_POSTS.filter(p => p.slug !== post.slug).slice(0, 2).map((p) => (
                             <Link key={p.slug} href={`/blog/${p.slug}`} className="group block">
-                                <div className="relative aspect-[16/9] overflow-hidden mb-6">
+                                <div className="relative aspect-[16/9] overflow-hidden mb-8 bg-background">
+                                    <div className="absolute inset-0 bg-black/40 z-10 group-hover:bg-black/10 transition-colors duration-[2s] ease-[0.16,1,0.3,1]" />
                                     <Image
                                         src={p.image}
                                         alt={p.title}
                                         fill
-                                        className="object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+                                        className="object-cover contrast-[1.1] grayscale-[50%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-[2.5s] ease-[cubic-bezier(0.16,1,0.3,1)]"
                                     />
                                 </div>
-                                <h4 className="font-hero text-2xl group-hover:text-accent-luxury transition-colors">{p.title}</h4>
+                                <h4 className="font-hero text-[clamp(2rem,3vw,3rem)] tracking-tighter text-border-strong group-hover:text-foreground group-hover:italic transition-all duration-700 leading-none">{p.title}</h4>
                             </Link>
                         ))}
                     </div>

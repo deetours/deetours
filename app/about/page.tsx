@@ -1,180 +1,261 @@
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
+import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
-import { Button } from "@/components/ui/button";
-import { OWNER } from "@/lib/constants";
-import { ArrowRight } from "lucide-react";
 
-export default function StudioPage() {
-    const { scrollYProgress } = useScroll();
+export default function WhyDeeToursPage() {
+    const containerRef = useRef<HTMLDivElement>(null);
+    const { scrollYProgress } = useScroll({
+        target: containerRef,
+        offset: ["start start", "end end"]
+    });
+
     const yParallax = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
 
-    const values = [
-        { number: "01", title: "Radical Curation", body: "We do not offer 500 packages. We offer a handful of masterpieces. Every journey is chosen because we have deeply researched, personally visited, or meticulously vetted each element within it." },
-        { number: "02", title: "Safety as Luxury", body: "For the modern woman traveler, the greatest luxury is feeling completely safe. Our on-ground network in every destination operates quietly, around the clock, ensuring physical and emotional security without feeling like surveillance." },
-        { number: "03", title: "Invisible Logistics", body: "The interface should disappear so the experience remains. We handle every permit, transfer, reservation, and contingency in advance. You should feel like the world is perfectly arranged around you." },
-        { number: "04", title: "Transformation as Goal", body: "We are not building itineraries. We are architecting life-altering chapters. Every journey should leave you changed—expanded, grounded, and more deeply yourself." },
-    ];
-
     return (
-        <main className="min-h-screen bg-background relative selection:bg-accent-luxury selection:text-white">
+        <main ref={containerRef} className="min-h-screen bg-background text-foreground selection:bg-foreground selection:text-background relative overflow-hidden transition-colors duration-500">
             <Navigation />
 
-            {/* Full-Bleed Cinematic Hero */}
-            <section className="relative h-screen w-full overflow-hidden bg-primary-dark">
-                <motion.div style={{ y: yParallax }} className="absolute inset-0 w-full h-full">
-                    <Image
-                        src="https://images.unsplash.com/photo-1498307833015-e7b411130613?q=80&w=2609&auto=format&fit=crop"
-                        alt="The Studio"
-                        fill
-                        className="object-cover opacity-50"
-                        priority
-                    />
-                </motion.div>
-                <div className="noise" />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary-dark via-primary-dark/30 to-transparent z-10" />
-                <div className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-black/80 to-transparent z-10 pointer-events-none" />
+            {/* Ambient Background Noise */}
+            <div className="absolute inset-0 noise z-0" />
 
-                <div className="absolute inset-0 flex flex-col items-center justify-center z-10 text-white p-6 text-center">
+            {/* Core WHY Sequence (Hero) */}
+            <section className="relative min-h-[90vh] flex flex-col items-center justify-center pt-32 pb-16 px-6 md:px-12 z-10 border-b border-border-subtle">
+                <motion.div style={{ y: yParallax }} className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_50%_0%,var(--color-surface-1)_0%,transparent_60%)] opacity-30" />
+                
+                <div className="max-w-[1200px] w-full mx-auto text-center relative z-10 flex flex-col items-center">
                     <motion.p
-                        initial={{ opacity: 0, y: 20 }}
+                        initial={{ opacity: 0, y: 15 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-                        className="text-[11px] uppercase tracking-[0.3em] text-white/60 mb-8"
+                        transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+                        className="text-[0.6rem] md:text-xs uppercase tracking-[0.4em] md:tracking-[0.6em] text-muted mb-12 font-medium"
                     >
-                        Founded by {OWNER.name}
+                        The Core Philosophy
                     </motion.p>
+                    
                     <motion.h1
-                        initial={{ opacity: 0, y: 20 }}
+                        initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                        className="font-hero text-[clamp(3.5rem,9vw,8rem)] leading-[0.9] tracking-tighter max-w-5xl text-balance"
+                        transition={{ duration: 1.4, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+                        className="font-hero text-[clamp(2.5rem,6vw,6rem)] leading-[0.9] tracking-tighter text-foreground max-w-5xl text-balance"
                     >
-                        We design journeys that <span className="italic text-accent-luxury font-light">change you.</span>
+                        We build DeeTours so you don’t have to fight <span className="italic font-light text-muted">confusion, risk, or doubt</span> to experience the world.
                     </motion.h1>
-                </div>
-
-                {/* Scroll hint */}
-                <div className="absolute bottom-12 left-1/2 -translate-x-1/2 text-white/40 z-10 flex flex-col items-center gap-3">
-                    <span className="text-[10px] uppercase tracking-[0.3em]">Scroll</span>
+                    
                     <motion.div
-                        animate={{ y: [0, 8, 0] }}
-                        transition={{ duration: 2, repeat: Infinity }}
-                        className="w-px h-12 bg-white/20"
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 96 }}
+                        transition={{ duration: 1.5, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                        className="w-[1px] bg-gradient-to-b from-border-strong to-transparent mt-24"
                     />
                 </div>
             </section>
 
-            {/* Origin Story — Deepa Murali */}
-            <section className="max-w-[1200px] mx-auto px-6 md:px-12 py-[clamp(8rem,15vw,12rem)] grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
-                <div className="lg:col-span-5 relative aspect-[3/4] overflow-hidden bg-gray-100">
-                    <Image
-                        src="https://images.unsplash.com/photo-1531123897727-8f129e1eb4ce?q=80&w=1287&auto=format&fit=crop"
-                        alt={OWNER.name}
-                        fill
-                        className="object-cover"
-                    />
-                    <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-primary-dark/80 to-transparent">
-                        <p className="text-white font-hero text-2xl">{OWNER.name}</p>
-                        <p className="text-accent-luxury text-[10px] tracking-[0.2em] uppercase mt-1">{OWNER.tagline}</p>
+            {/* Deep Human Problem */}
+            <section className="py-32 md:py-48 px-6 md:px-12 relative z-10">
+                <div className="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-24">
+                    <div className="md:col-span-4 lg:col-span-5">
+                        <motion.p
+                            initial={{ opacity: 0, x: -20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true, margin: "-100px" }}
+                            transition={{ duration: 1 }}
+                            className="text-[0.6rem] md:text-xs uppercase tracking-[0.4em] text-muted sticky top-32 md:top-48 font-medium"
+                        >
+                            The Real Problem
+                        </motion.p>
                     </div>
-                </div>
+                    
+                    <div className="md:col-span-8 lg:col-span-7 flex flex-col gap-12 md:gap-20">
+                        <motion.h2
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: "-100px" }}
+                            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+                            className="font-hero text-[clamp(2rem,4vw,4rem)] leading-[0.95] tracking-tight text-foreground"
+                        >
+                            The real problem is not planning a trip. It is <span className="italic font-light">decision fatigue, lack of trust,</span> and emotional uncertainty.
+                        </motion.h2>
+                        
+                        <motion.p
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: "-100px" }}
+                            transition={{ duration: 1, delay: 0.1 }}
+                            className="text-muted text-lg md:text-xl font-light leading-relaxed max-w-2xl"
+                        >
+                            Travel today feels noisy, uncertain, and mentally exhausting. People don't just struggle with logistics. They struggle with who to trust. They wonder if what they see is what will actually happen. They wonder if they will feel comfortable.
+                        </motion.p>
 
-                <div className="lg:col-span-7 flex flex-col gap-10">
-                    <div>
-                        <p className="text-[10px] uppercase tracking-[0.3em] text-gray-400 mb-8">The Origin</p>
-                        <h2 className="font-hero text-[clamp(2rem,4vw,3.5rem)] leading-tight text-primary-dark text-balance mb-8">
-                            Born from a personal search for travel that felt <span className="italic text-gray-500">truly safe and truly free.</span>
-                        </h2>
-                    </div>
-                    <div className="space-y-6 text-lg text-gray-600 font-light leading-relaxed">
-                        <p>
-                            {OWNER.name} founded DeeTours after years of experiencing travel that promised transformation but delivered exhaustion. As a solo woman traveler navigating the world, she encountered a fundamental contradiction: the most beautiful destinations were often the hardest to access safely, and the safest options surrendered all beauty.
-                        </p>
-                        <p>
-                            She built DeeTours as the answer — a studio that applies the same ruthless editorial eye to travel as a great maison applies to fashion. Nothing that doesn't belong. Nothing that doesn't serve the experience. Only the essential, the meaningful, and the breathtaking.
-                        </p>
-                        <p>
-                            Today, DeeTours has curated journeys for hundreds of women across 30+ countries, with a singular philosophy: <strong className="text-primary-dark font-medium">the world belongs to those who are prepared to meet it on its own terms.</strong>
-                        </p>
-                    </div>
-                    <div className="flex items-center gap-4 pt-4">
-                        <Link href="/contact">
-                            <Button size="lg" variant="outline">
-                                Begin a Conversation <ArrowRight className="w-4 h-4 ml-2 inline" />
-                            </Button>
-                        </Link>
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: "-100px" }}
+                            transition={{ duration: 1, delay: 0.2 }}
+                            className="p-8 md:p-12 lg:p-16 border border-border-subtle bg-surface-1 transition-colors duration-500 rounded-none md:rounded-xl relative overflow-hidden group hover:border-border-strong"
+                        >
+                            <h3 className="font-hero text-2xl md:text-3xl mb-6 italic font-light text-foreground group-hover:scale-[1.02] transform transition-transform duration-700 origin-left">The Subconscious Toll</h3>
+                            <p className="text-muted font-light text-base md:text-lg leading-relaxed">
+                                People want to experience the world fully, but they are tired of carrying the burden of planning, verifying, worrying, and second-guessing every decision.
+                            </p>
+                        </motion.div>
                     </div>
                 </div>
             </section>
 
-            {/* The Values — Editorial Numbered Layout */}
-            <section className="bg-primary-dark text-white py-[clamp(8rem,15vw,12rem)] relative overflow-hidden">
-                <div className="noise" />
-                <div className="max-w-[1200px] mx-auto px-6 md:px-12 relative z-10">
-                    <p className="text-[10px] uppercase tracking-[0.3em] text-gray-500 mb-24">The Philosophy</p>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
-                        {values.map((v, i) => (
+            {/* Audience Psychology / Trust Matrix */}
+            <section className="py-32 md:py-48 bg-surface-1 border-y border-border-subtle px-6 md:px-12 relative z-10 transition-colors duration-500">
+                <div className="max-w-[1400px] mx-auto">
+                    <div className="mb-24 md:mb-32 text-center md:text-left">
+                        <motion.p
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: "-100px" }}
+                            transition={{ duration: 1 }}
+                            className="text-[0.6rem] md:text-xs uppercase tracking-[0.4em] text-muted mb-8 font-medium"
+                        >
+                            Psychological States
+                        </motion.p>
+                        <motion.h2
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: "-100px" }}
+                            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+                            className="font-hero text-[clamp(2rem,5vw,4.5rem)] leading-[0.9] tracking-tight max-w-4xl text-foreground"
+                        >
+                            Different expressions of the exact same <span className="italic font-light text-muted">human need.</span>
+                        </motion.h2>
+                    </div>
+
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-px bg-border-subtle">
+                        {[
+                            { title: "The Seeker", desc: "Wants freedom and exploration. Fears unsafe situations and poor execution. Needs to feel completely physically and emotionally safe." },
+                            { title: "The Achiever", desc: "Time-starved. Wants quality experiences. Fears wasting money and badly organized chaos. Needs to feel this is definitively worth their time." },
+                            { title: "The Trust-Driven", desc: "Wants simplicity and reliability. Fears scams and lack of care. Needs to know they can trust the architects completely." },
+                            { title: "The Spiritual Explorer", desc: "Wants depth and authenticity. Fears commercialized tourism. Needs to feel a profound, unbothered connection." }
+                        ].map((item, i) => (
                             <motion.div
-                                key={v.number}
-                                initial={{ opacity: 0, y: 30 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true, margin: "-80px" }}
-                                transition={{ duration: 1, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-                                className="border-t border-gray-800 pt-10"
+                                key={i}
+                                initial={{ opacity: 0 }}
+                                whileInView={{ opacity: 1 }}
+                                viewport={{ once: true, margin: "-50px" }}
+                                transition={{ duration: 0.8, delay: i * 0.1 }}
+                                className="bg-background p-10 md:p-16 hover:bg-surface-1 transition-colors duration-700 group flex flex-col justify-between min-h-[300px]"
                             >
-                                <span className="font-hero text-6xl text-gray-800 block mb-6">{v.number}</span>
-                                <h3 className="font-hero text-3xl mb-6">{v.title}</h3>
-                                <p className="text-gray-400 font-light leading-relaxed text-lg">{v.body}</p>
+                                <div>
+                                    <h3 className="font-hero text-3xl md:text-4xl mb-6 tracking-tighter text-foreground group-hover:italic transition-all duration-500">{item.title}</h3>
+                                    <div className="w-12 h-[1px] bg-border-strong mb-8 group-hover:w-24 transition-all duration-700" />
+                                </div>
+                                <p className="text-muted font-light leading-relaxed text-base md:text-lg max-w-sm">
+                                    {item.desc}
+                                </p>
                             </motion.div>
                         ))}
                     </div>
+
+                    <motion.div 
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, margin: "-100px" }}
+                        transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
+                        className="mt-32 md:mt-48 text-center"
+                    >
+                        <h2 className="font-hero text-[clamp(2.5rem,6vw,6rem)] text-foreground leading-none mb-6 tracking-tighter drop-shadow-sm">
+                            “I don’t have to worry anymore.”
+                        </h2>
+                        <p className="text-muted font-medium text-xs md:text-sm uppercase tracking-[0.4em]">The underlying truth.</p>
+                    </motion.div>
                 </div>
             </section>
 
-            {/* Stats/Trust Bar */}
-            <section className="py-24 border-b border-gray-100">
-                <div className="max-w-[1200px] mx-auto px-6 md:px-12 grid grid-cols-2 md:grid-cols-4 gap-8">
-                    {[
-                        { stat: "500+", label: "Women Journeys Curated" },
-                        { stat: "30+", label: "Countries Explored" },
-                        { stat: "100%", label: "Safety Record" },
-                        { stat: "4.9★", label: "Average Experience Rating" },
-                    ].map((item, i) => (
+            {/* The Transformation */}
+            <section className="py-32 md:py-48 px-6 md:px-12 relative z-10 text-center flex flex-col items-center justify-center bg-background">
+                <div className="max-w-[1200px] w-full mx-auto">
+                    <motion.p
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, margin: "-100px" }}
+                        transition={{ duration: 1 }}
+                        className="text-[0.6rem] md:text-xs uppercase tracking-[0.4em] text-muted mb-16 md:mb-24 font-medium"
+                    >
+                        The Expected Transformation
+                    </motion.p>
+                    <div className="flex flex-col md:flex-row items-center justify-center gap-12 md:gap-16">
                         <motion.div
-                            key={item.label}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.8, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-                            className="text-center"
+                            initial={{ opacity: 0, x: -20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true, margin: "-50px" }}
+                            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+                            className="flex-1 md:text-right w-full"
                         >
-                            <p className="font-hero text-5xl md:text-6xl text-primary-dark mb-3">{item.stat}</p>
-                            <p className="text-[10px] uppercase tracking-[0.2em] text-gray-400">{item.label}</p>
+                            <p className="text-muted font-hero text-[clamp(2rem,4vw,4rem)] italic font-light tracking-tighter opacity-50 line-through">
+                                Overwhelmed & Uncertain
+                            </p>
                         </motion.div>
-                    ))}
+                        
+                        <motion.div
+                            initial={{ scale: 0, rotate: -45 }}
+                            whileInView={{ scale: 1, rotate: 0 }}
+                            viewport={{ once: true, margin: "-50px" }}
+                            transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
+                            className="w-16 h-16 md:w-20 md:h-20 flex items-center justify-center border border-border-strong rounded-full shrink-0"
+                        >
+                            <span className="text-foreground text-xl md:text-2xl font-light">→</span>
+                        </motion.div>
+                        
+                        <motion.div
+                            initial={{ opacity: 0, x: 20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true, margin: "-50px" }}
+                            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+                            className="flex-1 md:text-left w-full"
+                        >
+                            <p className="text-foreground font-hero text-[clamp(2rem,4vw,4rem)] tracking-tighter">
+                                Calm, Confident & Present
+                            </p>
+                        </motion.div>
+                    </div>
                 </div>
             </section>
 
-            {/* Final CTA */}
-            <section className="py-32 text-center max-w-2xl mx-auto px-6">
-                <p className="text-[10px] uppercase tracking-[0.3em] text-gray-400 mb-8">Ready?</p>
-                <h2 className="font-hero text-[clamp(2.5rem,6vw,5rem)] text-primary-dark leading-tight mb-12 text-balance">
-                    Let {OWNER.name} design your next chapter.
-                </h2>
-                <Link href="/contact">
-                    <Button size="lg">
-                        Request a Consultation
-                    </Button>
-                </Link>
-                <div className="mt-8">
-                    <a href={`tel:${OWNER.phone}`} className="text-[10px] uppercase tracking-[0.2em] text-gray-400 hover:text-primary-dark transition-colors">
-                        Or call directly: {OWNER.phone}
-                    </a>
+            {/* Brand Beliefs / Axioms */}
+            <section className="py-32 md:py-48 bg-surface-1 border-t border-border-subtle px-6 md:px-12 relative z-10 transition-colors duration-500">
+                <div className="max-w-[1400px] mx-auto">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 md:gap-24">
+                        <div className="lg:col-span-4">
+                            <motion.h2
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true, margin: "-100px" }}
+                                transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+                                className="font-hero text-[clamp(3rem,5vw,5rem)] tracking-tighter leading-[0.9] sticky top-32 md:top-48 text-foreground"
+                            >
+                                Axioms of <br/><span className="italic font-light text-muted">Experience.</span>
+                            </motion.h2>
+                        </div>
+                        <div className="lg:col-span-7 lg:col-start-6 flex flex-col gap-16 md:gap-24">
+                            {[
+                                { title: "Trust Over Variety", content: "People don’t want 100 options. They want 1 option they can rely on implicitly." },
+                                { title: "Ease is a Premium", content: "The less mental load the traveler carries, the higher the perceived value. Friction destroys flow." },
+                                { title: "Care Creates Loyalty", content: "People remember exactly how supported they felt, not just the details of where they went." },
+                                { title: "Clarity Over Noise", content: "No overwhelming choices. Only methodically designed, profoundly meaningful experiences." }
+                            ].map((axiom, i) => (
+                                <motion.div
+                                    key={i}
+                                    initial={{ opacity: 0, y: 30 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true, margin: "-100px" }}
+                                    transition={{ duration: 1.2, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                                    className="border-b border-border-subtle pb-12 group"
+                                >
+                                    <h3 className="font-hero text-3xl md:text-5xl text-foreground mb-6 md:mb-8 tracking-tight group-hover:translate-x-2 transition-transform duration-500">{axiom.title}</h3>
+                                    <p className="text-muted font-light text-lg md:text-xl leading-relaxed max-w-xl">{axiom.content}</p>
+                                </motion.div>
+                            ))}
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -182,3 +263,4 @@ export default function StudioPage() {
         </main>
     );
 }
+

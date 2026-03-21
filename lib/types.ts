@@ -9,6 +9,10 @@ export interface Trip {
     rating: number;
     reviewsCount: number;
     description?: string;
+    itinerary?: { day: number; title: string; description: string; image: string }[];
+    gallery?: string[];
+    included?: string[];
+    faq?: { question: string; answer: string }[];
 }
 
 export interface Testimonial {

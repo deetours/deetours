@@ -13,73 +13,204 @@ export const FEATURED_TRIPS: Trip[] = [
         id: 'trip-1',
         title: 'Awakening in the Himalayas',
         destination: 'Bhutan',
-        duration: '10 Days',
+        duration: '7 Days',
         price: 4500,
         imageUrl: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?q=80&w=2674&auto=format&fit=crop',
         category: 'spiritual',
         rating: 4.9,
         reviewsCount: 124,
         description: 'A transformative journey through ancient monasteries and pristine landscapes that challenge the very edges of your perspective.',
+        gallery: [
+            'https://images.unsplash.com/photo-1544735716-392fe2489ffa?q=80&w=2674&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1629732047847-50219e9c5aef?q=80&w=2670&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1549487532-6101c59dc0f6?q=80&w=2670&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1618392135688-661cc2e3b2e5?q=80&w=2670&auto=format&fit=crop'
+        ],
+        included: [
+            'Private charter access to Paro valley',
+            'All internal transfers via luxury SUV',
+            'Exclusive audience with head monks',
+            'Luxury lodge accommodations (Amankora or equivalent)',
+            'All meals crafted by private chefs',
+            'Bhutanese visa and sustainable development fee'
+        ],
+        faq: [
+            { question: "How difficult is the Tiger's Nest hike?", answer: "The hike takes approximately 4-6 hours round trip. It is moderately challenging, but we provide a private guide to ensure we go exactly at your pace. We also arrange a halfway rest stop with curated refreshments." },
+            { question: "What is the best time to visit?", answer: "Spring (March to May) and Autumn (September to November) offer the clearest skies and most pleasant temperatures for mountain immersion." },
+            { question: "Is the sustainable development fee included?", answer: "Yes, the daily SDF required by the Bhutanese government is fully covered in your investment." }
+        ],
+        itinerary: [
+            { day: 1, title: 'Arrival in Paro', description: 'Your private guide greets you. We transfer to your sanctuary lodge hidden in the pine forest for an evening of quiet acclimatization and a traditional hot stone bath.', image: 'https://images.unsplash.com/photo-1629732047847-50219e9c5aef?q=80&w=2670&auto=format&fit=crop' },
+            { day: 2, title: 'The Silent Capital', description: 'Journey to Thimphu. Visit the monumental Buddha Dordenma before an exclusive, after-hours private viewing of a 16th-century dzong. Return to the lodge for a private dining experience.', image: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?q=80&w=2674&auto=format&fit=crop' },
+            { day: 3, title: 'Punakha Valley', description: 'Drive over the dramatic Dochu La pass. Descend into the subtropical Punakha valley for a private farm-to-table lunch amidst the terraced rice fields, followed by a quiet blessing at the Punakha Dzong.', image: 'https://images.unsplash.com/photo-1549487532-6101c59dc0f6?q=80&w=2670&auto=format&fit=crop' },
+            { day: 4, title: 'The Ascent', description: 'An early morning ascent to Taktsang (Tiger\'s Nest) Monastery. We arrange exclusive access to meditation halls normally closed to the public. The afternoon is left intentionally blank for reflection.', image: 'https://images.unsplash.com/photo-1618392135688-661cc2e3b2e5?q=80&w=2670&auto=format&fit=crop' },
+        ]
     },
     {
         id: 'trip-2',
         title: 'Patagonian Wilderness',
         destination: 'Chile & Argentina',
-        duration: '14 Days',
+        duration: '8 Days',
         price: 6200,
         imageUrl: 'https://images.unsplash.com/photo-1516483642785-02bd6f6c984f?q=80&w=2674&auto=format&fit=crop',
         category: 'adventure',
         rating: 5.0,
         reviewsCount: 89,
         description: 'Trek the very edge of the world through ancient glaciers and dramatically sculpted peaks.',
+        gallery: [
+            'https://images.unsplash.com/photo-1516483642785-02bd6f6c984f?q=80&w=2674&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1521192934187-575ffbdd048e?q=80&w=2670&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1533692328965-dc06febb04c6?q=80&w=2670&auto=format&fit=crop'
+        ],
+        included: [
+            'Private helicopter charter to basecamps',
+            'Eco-dome luxury accommodations',
+            'Expert mountaineering guides',
+            'Gourmet meals prepared over open fire',
+            'All national park permits'
+        ],
+        faq: [
+            { question: "Do I need technical climbing experience?", answer: "No. This journey is designed for active individuals but requires no technical ice or rock climbing skills. We customize the daily routes based on your comfort level." }
+        ],
+        itinerary: [
+            { day: 1, title: 'The Edge of the World', description: 'Arrive in Punta Arenas. Private transfer to your luxury eco-dome in Torres del Paine, staring directly at the Cuernos del Paine. Evening briefing with your lead guide.', image: 'https://images.unsplash.com/photo-1521192934187-575ffbdd048e?q=80&w=2670&auto=format&fit=crop' },
+            { day: 2, title: 'The Grey Glacier', description: 'A private boat crosses Lago Grey to navigate the ancient icebergs. After an onshore lunch, we hike the eastern shore back to basecamp.', image: 'https://images.unsplash.com/photo-1516483642785-02bd6f6c984f?q=80&w=2674&auto=format&fit=crop' },
+            { day: 3, title: 'French Valley', description: 'An immersive 8-hour trek into the French Valley. This is the heart of the massif, surrounded by hanging glaciers and sheer granite. Silence is mandatory here.', image: 'https://images.unsplash.com/photo-1533692328965-dc06febb04c6?q=80&w=2670&auto=format&fit=crop' },
+            { day: 4, title: 'The Base of the Towers', description: 'The grand finale. A pre-dawn ascent to witness the sunrise turning the granite towers a fierce crimson. Return to the lodge for a celebratory Patagonian barbecue.', image: 'https://images.unsplash.com/photo-1516483642785-02bd6f6c984f?q=80&w=2674&auto=format&fit=crop' }
+        ]
     },
     {
         id: 'trip-3',
         title: 'Amalfi Coast Retreat',
         destination: 'Italy',
-        duration: '7 Days',
+        duration: '6 Days',
         price: 5800,
         imageUrl: 'https://images.unsplash.com/photo-1533105079780-92b9be482077?q=80&w=2674&auto=format&fit=crop',
         category: 'luxury',
         rating: 4.8,
         reviewsCount: 210,
         description: 'Experience absolute luxury along the Mediterranean coast, where every hour is orchestrated.',
+        gallery: [
+            'https://images.unsplash.com/photo-1533105079780-92b9be482077?q=80&w=2674&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1600816654763-7c5ef2e65c92?q=80&w=2670&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=2676&auto=format&fit=crop'
+        ],
+        included: [
+            'Private Riva yacht charter',
+            'Exclusive cliffside villa access',
+            'Michelin-starred private dining',
+            'Dedicated luxury concierge 24/7',
+            'Airport helicopter transfer'
+        ],
+        faq: [
+            { question: "Is this suitable for a honeymoon?", answer: "This is our quintessential romantic escape. We handle all logistics incredibly discreetly so you can simply focus on each other." }
+        ],
+        itinerary: [
+            { day: 1, title: 'Cliffside Arrival', description: 'Arrive in Naples, immediately bypassing the crowds via private helicopter to your cliffside suite in Ravello. Champagne and absolute quiet await.', image: 'https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=2676&auto=format&fit=crop' },
+            { day: 2, title: 'The Path of the Gods', description: 'A private guided hike along the legendary Sentiero degli Dei, ending in Positano. A table is waiting for you with the perfect ocean view and an iced limoncello.', image: 'https://images.unsplash.com/photo-1600816654763-7c5ef2e65c92?q=80&w=2670&auto=format&fit=crop' },
+            { day: 3, title: 'The Private Riva', description: 'Your captain awaits. A full day moving down the coast in a vintage wooden Riva yacht. We arranged for lunch on a secluded beach accessible only by water.', image: 'https://images.unsplash.com/photo-1533105079780-92b9be482077?q=80&w=2674&auto=format&fit=crop' },
+            { day: 4, title: 'The Lemon Groves', description: 'A morning walking through a family-owned lemon grove that has operated for 300 years. An afternoon of unbothered stillness by the infinity pool.', image: 'https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=2676&auto=format&fit=crop' }
+        ]
     },
     {
         id: 'trip-4',
         title: 'Kerala Backwaters',
         destination: 'Kerala, India',
-        duration: '6 Days',
+        duration: '5 Days',
         price: 1800,
         imageUrl: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?q=80&w=2670&auto=format&fit=crop',
         category: 'leisure',
         rating: 4.7,
         reviewsCount: 176,
         description: 'Float through emerald waterways on a private houseboat, surrounded by the lush silence of the tropics.',
+        gallery: [
+            'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?q=80&w=2670&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1593693397690-362cb9666fc2?q=80&w=2669&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1596484552834-3a58f83efa61?q=80&w=2674&auto=format&fit=crop'
+        ],
+        included: [
+            'Ultra-luxury private Kettuvallam (houseboat)',
+            'Personal Ayurvedic physician consultation',
+            'Chef-prepared organic Kerala cuisine',
+            'Private temple access',
+            'Chauffeur-driven luxury transfers'
+        ],
+        faq: [
+            { question: "Are mosquitoes an issue on the houseboat?", answer: "Our luxury houseboats are fully air-conditioned and sealed at night. We also provide organic, high-end repellants." },
+            { question: "Is the food very spicy?", answer: "Your private chef customizes every meal to your exact palate preferences, while maintaining authentic flavors." }
+        ],
+        itinerary: [
+            { day: 1, title: 'The Emerald Entry', description: 'Board your private houseboat in Alleppey. As you drift away from the shore, the noise of the city is immediately replaced by the sound of water and birds.', image: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?q=80&w=2670&auto=format&fit=crop' },
+            { day: 2, title: 'Village Rhythms', description: 'Wake up to the mist on the water. A small canoe takes you through the narrowest canals to witness village life before the heat of the day. Afternoon Ayurvedic massage.', image: 'https://images.unsplash.com/photo-1593693397690-362cb9666fc2?q=80&w=2669&auto=format&fit=crop' },
+            { day: 3, title: 'The Kumarakom Sanctuary', description: 'Cross Vembanad Lake to a luxury eco-resort hidden in the mangroves. Spend the day walking the bird sanctuary with a local naturalist.', image: 'https://images.unsplash.com/photo-1596484552834-3a58f83efa61?q=80&w=2674&auto=format&fit=crop' },
+            { day: 4, title: 'The Spice Route', description: 'A private cooking masterclass focusing on the ancient spice trade of the Malabar coast. Evening sunset cruise on silence electric boats.', image: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?q=80&w=2670&auto=format&fit=crop' }
+        ]
     },
     {
         id: 'trip-5',
         title: 'The Atlas Traverse',
         destination: 'Morocco',
-        duration: '9 Days',
+        duration: '7 Days',
         price: 3200,
         imageUrl: 'https://images.unsplash.com/photo-1549449850-891ca68453cc?q=80&w=2674&auto=format&fit=crop',
         category: 'adventure',
         rating: 4.9,
         reviewsCount: 102,
         description: 'A journey through the high Atlas Mountains, Saharan dunes, and ancient medinas of Morocco.',
+        gallery: [
+            'https://images.unsplash.com/photo-1549449850-891ca68453cc?q=80&w=2674&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1539020140153-e479b8c22e70?q=80&w=2671&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1489749798305-4fea3ae63d43?q=80&w=2667&auto=format&fit=crop'
+        ],
+        included: [
+            'Luxury desert camp entirely private to your party',
+            'Boutique Riad accommodation in Marrakech',
+            '4x4 Land Cruiser with expert desert driver',
+            'All meals and non-alcoholic beverages',
+            'Private Medina architectural tour'
+        ],
+        faq: [
+            { question: "Is the desert camp comfortable?", answer: "Extraordinarily. It features proper beds with high-end linens, en-suite bathrooms, and hot showers, erected entirely for your private use." }
+        ],
+        itinerary: [
+            { day: 1, title: 'The Labyrinth', description: 'Arrive in Marrakech. We bypass the chaotic square and go straight to your silent, inner-courtyard Riad. Evening tea listening to the Medina hum from afar.', image: 'https://images.unsplash.com/photo-1539020140153-e479b8c22e70?q=80&w=2671&auto=format&fit=crop' },
+            { day: 2, title: 'Over the Atlas', description: 'Drive over the dramatic Tizi n\'Tichka pass. Stop for lunch at a restored Kasbah before descending into the pre-Saharan valleys of absolute red rock.', image: 'https://images.unsplash.com/photo-1549449850-891ca68453cc?q=80&w=2674&auto=format&fit=crop' },
+            { day: 3, title: 'The Silent Sands', description: 'Transfer to 4x4s and head deep into the Erg Chebbi dunes. Arrive at your private luxury camp. Watch the sunset turn the sand to gold, followed by dining under the Milky Way.', image: 'https://images.unsplash.com/photo-1489749798305-4fea3ae63d43?q=80&w=2667&auto=format&fit=crop' },
+            { day: 4, title: 'The Oasis', description: 'A slow morning walking the dunes. In the afternoon, we visit a hidden palm oasis in the valley for a private picnic sheltered from the sun.', image: 'https://images.unsplash.com/photo-1549449850-891ca68453cc?q=80&w=2674&auto=format&fit=crop' }
+        ]
     },
     {
         id: 'trip-6',
         title: 'Kyoto Serenity Retreat',
         destination: 'Japan',
-        duration: '8 Days',
+        duration: '7 Days',
         price: 5200,
         imageUrl: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=2670&auto=format&fit=crop',
         category: 'spiritual',
         rating: 5.0,
         reviewsCount: 148,
         description: 'Immerse yourself in ancient temple culture, private tea ceremonies, and the meditative art of kaiseki dining.',
+        gallery: [
+            'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=2670&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1528360983277-13d401cdc186?q=80&w=2670&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1524413840807-0c3cb6fa808d?q=80&w=2670&auto=format&fit=crop'
+        ],
+        included: [
+            'Exclusive temple stays (Shukubo)',
+            'Private Zen meditation instruction',
+            'Kaiseki dining experiences',
+            'First-class Shinkansen tickets',
+            'Bespoke kimono fitting and gifting'
+        ],
+        faq: [
+            { question: "Do I need to speak Japanese?", answer: "Not at all. Your private cultural liaison will accompany you, translating not just language, but deeply nuanced cultural contexts." }
+        ],
+        itinerary: [
+            { day: 1, title: 'Arrival in the Ancient Capital', description: 'Check into your minimalist Ryokan. You are dressed in a yukata and served your first, highly deliberate cup of matcha in total silence.', image: 'https://images.unsplash.com/photo-1528360983277-13d401cdc186?q=80&w=2670&auto=format&fit=crop' },
+            { day: 2, title: 'The Empty Stone', description: 'Early morning private access to a renowned Zen rock garden before it opens to the public. Followed by a 2-hour meditation block with the abbot.', image: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=2670&auto=format&fit=crop' },
+            { day: 3, title: 'The Way of Tea', description: 'A half-day dedicated entirely to the Chado (tea ceremony). It forces you to slow down to an agonizingly beautiful pace. Evening walk through the lantern-lit streets of Gion.', image: 'https://images.unsplash.com/photo-1524413840807-0c3cb6fa808d?q=80&w=2670&auto=format&fit=crop' },
+            { day: 4, title: 'The Bamboo Grove', description: 'Instead of fighting crowds in Arashiyama, we take you to a private bamboo forest in the hills of northern Kyoto. An afternoon of shinrin-yoku (forest bathing).', image: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=2670&auto=format&fit=crop' }
+        ]
     },
 ];
 
@@ -197,4 +328,3 @@ export const JOURNAL_POSTS = [
     `
     },
 ];
-

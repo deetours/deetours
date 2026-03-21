@@ -6,13 +6,14 @@ import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { ThemeToggle } from "./theme-toggle";
+import { useAuth, UserButton } from "@clerk/nextjs";
 
 export function Navigation() {
     const [isScrolled, setIsScrolled] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const pathname = usePathname();
-
-    const isHeroPage = pathname === "/" || pathname === "/about" || (pathname.startsWith("/trips/") && pathname !== "/trips") || (pathname.startsWith("/blog/") && pathname !== "/blog");
+    const { isLoaded, userId } = useAuth();
 
     useEffect(() => {
         const handleScroll = () => setIsScrolled(window.scrollY > 50);
@@ -20,49 +21,44 @@ export function Navigation() {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
-    const transparentMode = isHeroPage && !isScrolled && !mobileMenuOpen;
-
     const links = [
-        { label: "Journeys", href: "/trips" },
-        { label: "Journal", href: "/blog" },
-        { label: "Studio", href: "/about" },
+        { label: "Destinations", href: "/destinations" },
+        { label: "The Collection", href: "/trips" },
+        { label: "Our Journals", href: "/blog" },
+        { label: "Why DeeTours", href: "/about" },
+        { label: "Book Now", href: "/booking" },
     ];
 
     return (
         <>
             <motion.nav
-                initial={{ y: -100 }}
-                animate={{ y: 0 }}
-                transition={{ ease: [0.22, 1, 0.36, 1], duration: 1 }}
+                initial={{ y: -100, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ ease: [0.16, 1, 0.3, 1], duration: 0.8 }}
                 className={cn(
-                    "fixed top-0 left-0 right-0 z-50 transition-colors duration-500 px-6 md:px-12 py-8",
-                    transparentMode ? "bg-transparent text-white" : "bg-background/80 backdrop-blur-xl text-primary-dark"
+                    "fixed top-4 md:top-8 left-1/2 -translate-x-1/2 z-[100] transition-transform duration-700 ease-[0.16,1,0.3,1] w-[90%] md:w-auto min-w-[320px]",
+                    isScrolled ? "scale-95 shadow-2xl shadow-black/10" : "scale-100"
                 )}
             >
-                <div className="max-w-7xl mx-auto flex items-center">
-                    {/* Left Column: Logo */}
-                    <div className="flex-1 flex justify-start">
-                        <Link href="/" className="flex flex-col group">
-                            <span
-                                className={cn(
-                                    "font-hero text-2xl tracking-tighter leading-none transition-colors duration-500",
-                                    transparentMode ? "text-white" : "text-primary-dark"
-                                )}
-                            >
+                <div className="flex items-center justify-between bg-surface-1/90 backdrop-blur-3xl border border-border-subtle rounded-full px-6 md:px-10 py-5 transition-colors duration-500">
+                    {/* Left: Logo */}
+                    <div className="flex items-center mr-8 md:mr-16">
+                        <Link href="/" className="group">
+                            <span className="font-hero text-xl tracking-tighter text-foreground group-hover:text-muted transition-colors duration-500">
                                 DeeTours
                             </span>
                         </Link>
                     </div>
 
-                    {/* Center Column: Links */}
-                    <div className="hidden md:flex items-center space-x-12">
+                    {/* Center: Links (Hidden on Mobile) */}
+                    <div className="hidden md:flex items-center gap-10">
                         {links.map((link) => (
                             <Link
                                 key={link.href}
                                 href={link.href}
                                 className={cn(
-                                    "text-[11px] uppercase tracking-[0.2em] font-medium transition-all duration-300 hover:opacity-50",
-                                    pathname === link.href && !transparentMode ? "text-accent-luxury" : ""
+                                    "text-[0.6rem] uppercase tracking-[0.4em] transition-all duration-500 hover:text-foreground",
+                                    pathname === link.href ? "text-foreground font-medium" : "text-muted"
                                 )}
                             >
                                 {link.label}
@@ -70,59 +66,67 @@ export function Navigation() {
                         ))}
                     </div>
 
-                    {/* Right Column: Sanctuary + Mobile Trigger */}
-                    <div className="flex-1 flex justify-end items-center gap-8">
-                        <Link
-                            href="/dashboard"
-                            className={cn(
-                                "hidden md:block text-[10px] uppercase tracking-[0.2em] font-medium transition-all duration-300 hover:opacity-50",
-                                pathname === "/dashboard" && !transparentMode ? "text-accent-luxury" : ""
-                            )}
-                        >
-                            Sanctuary
-                        </Link>
+                    {/* Right: Theme Toggle & Mobile Trigger */}
+                    <div className="flex items-center gap-4 md:ml-12">
+                        <ThemeToggle />
+                        
+                        {isLoaded && userId ? (
+                            <>
+                                <Link href="/dashboard" className="hidden md:block text-[0.6rem] uppercase tracking-[0.3em] text-foreground font-medium hover:italic transition-all opacity-80 hover:opacity-100">
+                                    Dashboard
+                                </Link>
+                                <div className="border border-border-subtle rounded-full p-[2px]">
+                                    <UserButton appearance={{ elements: { userButtonAvatarBox: "w-7 h-7" } }} />
+                                </div>
+                            </>
+                        ) : isLoaded && !userId ? (
+                            <Link href="/sign-in" className="hidden md:flex items-center justify-center text-[0.55rem] uppercase tracking-[0.3em] text-background bg-foreground px-4 py-2 rounded-full hover:bg-foreground/90 transition-colors">
+                                Archive Access
+                            </Link>
+                        ) : null}
 
                         <button
-                            className="md:hidden p-2"
+                            className="md:hidden p-2 text-foreground hover:text-muted transition-colors"
                             onClick={() => setMobileMenuOpen(true)}
                             aria-label="Open menu"
                         >
-                            <Menu className="w-6 h-6" />
+                            <Menu className="w-5 h-5" />
                         </button>
                     </div>
                 </div>
             </motion.nav>
 
-            {/* Full Screen Cinematic Menu */}
+            {/* Cinematic Full Screen Menu for Mobile */}
             <AnimatePresence>
                 {mobileMenuOpen && (
                     <motion.div
                         initial={{ opacity: 0, clipPath: "polygon(0 0, 100% 0, 100% 0, 0 0)" }}
                         animate={{ opacity: 1, clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)" }}
                         exit={{ opacity: 0, clipPath: "polygon(0 100%, 100% 100%, 100% 100%, 0 100%)" }}
-                        transition={{ ease: [0.22, 1, 0.36, 1], duration: 0.8 }}
-                        className="fixed inset-0 z-[60] bg-primary-dark text-white flex flex-col justify-center px-12"
+                        transition={{ ease: [0.16, 1, 0.3, 1], duration: 1 }}
+                        className="fixed inset-0 z-[110] bg-background text-foreground flex flex-col justify-center px-10 transition-colors duration-500"
                     >
-                        <div className="noise" />
+                        <div className="noise mix-blend-overlay opacity-30 pointer-events-none" />
 
                         <button
-                            className="absolute top-10 right-10 p-2 z-50 hover:rotate-90 transition-transform duration-500"
+                            className="absolute top-8 right-8 p-4 z-50 text-foreground hover:rotate-90 transition-transform duration-700"
                             onClick={() => setMobileMenuOpen(false)}
                         >
-                            <X className="w-8 h-8" />
+                            <X className="w-6 h-6" />
                         </button>
-                        <div className="flex flex-col gap-8 text-5xl md:text-7xl font-hero z-10">
-                            {[{ label: "Home", href: "/" }, ...links].map((link, i) => (
+                        
+                        <div className="flex flex-col gap-12 text-4xl md:text-6xl font-hero z-10 relative">
+                            {[{ label: "The Origin", href: "/" }, ...links].map((link, i) => (
                                 <motion.div
                                     key={link.href}
                                     initial={{ y: 40, opacity: 0 }}
                                     animate={{ y: 0, opacity: 1 }}
-                                    transition={{ delay: 0.2 + (i * 0.1), duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                                    transition={{ delay: 0.3 + (i * 0.1), duration: 1, ease: [0.16, 1, 0.3, 1] }}
                                 >
                                     <Link
                                         href={link.href}
                                         onClick={() => setMobileMenuOpen(false)}
-                                        className="hover:italic transition-all duration-300 block title-clip"
+                                        className="hover:italic transition-all duration-500 block text-muted hover:text-foreground"
                                     >
                                         {link.label}
                                     </Link>
@@ -135,3 +139,4 @@ export function Navigation() {
         </>
     );
 }
+

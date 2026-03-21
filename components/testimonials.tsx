@@ -1,97 +1,83 @@
 "use client";
 
-import { useState } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
-import { TESTIMONIALS } from "@/lib/constants";
 
 export function Testimonials() {
-    const [currentIndex, setCurrentIndex] = useState(0);
+    const sectionRef = useRef(null);
+    const { scrollYProgress } = useScroll({
+        target: sectionRef,
+        offset: ["start end", "end start"]
+    });
 
-    const handleNext = () => {
-        setCurrentIndex((prev) => (prev + 1) % TESTIMONIALS.length);
-    };
-
-    const handlePrev = () => {
-        setCurrentIndex((prev) => (prev - 1 + TESTIMONIALS.length) % TESTIMONIALS.length);
-    };
+    const yBackground = useTransform(scrollYProgress, [0, 1], ["-20%", "20%"]);
+    const opacityText = useTransform(scrollYProgress, [0.4, 0.6, 0.8], [0, 1, 0]);
 
     return (
-        <section className="py-24 md:py-[120px] bg-primary-dark text-white overflow-hidden text-center relative">
-            {/* Background subtle visual */}
-            <div className="absolute inset-0 opacity-5">
-                <div className="absolute top-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl translate-x-1/2 -translate-y-1/2" />
-                <div className="absolute bottom-0 left-0 w-96 h-96 bg-white rounded-full blur-3xl -translate-x-1/2 translate-y-1/2" />
-            </div>
+        <section 
+            ref={sectionRef}
+            className="relative h-[120vh] w-full bg-surface-1 overflow-hidden flex items-center justify-center"
+        >
+            {/* Massive 100% Viewport Width Background Image (Parallax/Fixed effect) */}
+            <motion.div 
+                style={{ y: yBackground }}
+                className="absolute inset-0 w-full h-[140%] -top-[20%]"
+            >
+                <Image
+                    src="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=2670&auto=format&fit=crop" // Abstract/Founder aesthetic image
+                    alt="The Curator"
+                    fill
+                    className="object-cover grayscale mix-blend-luminosity opacity-40"
+                    sizes="100vw"
+                />
+            </motion.div>
 
-            <div className="max-w-4xl mx-auto px-6 md:px-12 relative z-10">
-                <Quote className="w-16 h-16 text-accent-luxury mx-auto mb-10 opacity-50" />
+            {/* Deep atmospheric gradients to push the image back */}
+            <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background" />
+            <div className="absolute inset-0 bg-black/60" />
+            <div className="noise absolute inset-0 mix-blend-overlay opacity-30" />
 
-                <div className="relative min-h-[300px] md:min-h-[250px] flex items-center justify-center">
-                    <AnimatePresence mode="wait">
-                        <motion.div
-                            key={currentIndex}
-                            initial={{ opacity: 0, scale: 0.95 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: 1.05 }}
-                            transition={{ duration: 0.5, ease: "easeInOut" }}
-                            className="absolute inset-0 flex flex-col items-center justify-center"
-                        >
-                            <p className="font-hero text-2xl md:text-4xl leading-relaxed text-center text-white/90 mb-10 text-balance">
-                                "{TESTIMONIALS[currentIndex].content}"
-                            </p>
+            {/* The Trust Quote Typography layered perfectly over the darkest part */}
+            <div className="relative z-10 max-w-7xl mx-auto px-6 flex flex-col items-center justify-center text-center">
+                <motion.p
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
+                    className="text-[0.65rem] uppercase tracking-[0.3em] text-[#FAFAFA] opacity-60 mb-12"
+                >
+                    The Philosophy
+                </motion.p>
 
-                            <div className="flex items-center gap-4">
-                                {TESTIMONIALS[currentIndex].avatarUrl && (
-                                    <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-accent-luxury">
-                                        <Image
-                                            src={TESTIMONIALS[currentIndex].avatarUrl!}
-                                            alt={TESTIMONIALS[currentIndex].name}
-                                            fill
-                                            className="object-cover"
-                                        />
-                                    </div>
-                                )}
-                                <div className="text-left">
-                                    <h4 className="font-semibold text-lg tracking-wide">{TESTIMONIALS[currentIndex].name}</h4>
-                                    <p className="text-gray-400 text-sm">{TESTIMONIALS[currentIndex].role}</p>
-                                </div>
-                            </div>
-                        </motion.div>
-                    </AnimatePresence>
-                </div>
+                {/* Massive 8vw font size */}
+                <motion.div
+                    // Try to tie opacity to exactly when it crosses the center, but whileInView is safer for mobile
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 1.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                    className="flex flex-col items-center"
+                >
+                    <h2 className="font-hero text-[clamp(2.5rem,8vw,8rem)] text-[#FAFAFA] leading-[1] tracking-tighter mb-4 text-balance max-w-5xl">
+                        "Your only responsibility <br/>
+                        is to simply <span className="italic font-light text-[#E5E5E5] mix-blend-screen opacity-90">arrive</span>."
+                    </h2>
+                </motion.div>
 
-                {/* Controls */}
-                <div className="flex justify-center gap-6 mt-16">
-                    <button
-                        onClick={handlePrev}
-                        className="p-3 rounded-full border border-gray-700 hover:bg-white hover:text-primary-dark transition-colors"
-                        aria-label="Previous testimonial"
-                    >
-                        <ChevronLeft className="w-5 h-5" />
-                    </button>
-                    <div className="flex items-center gap-2">
-                        {TESTIMONIALS.map((_, idx) => (
-                            <button
-                                key={idx}
-                                onClick={() => setCurrentIndex(idx)}
-                                className={`w-2 h-2 rounded-full transition-all ${idx === currentIndex ? "bg-accent-luxury w-8" : "bg-gray-600 hover:bg-gray-400"
-                                    }`}
-                                aria-label={`Go to slide ${idx + 1}`}
-                            />
-                        ))}
-                    </div>
-                    <button
-                        onClick={handleNext}
-                        className="p-3 rounded-full border border-gray-700 hover:bg-white hover:text-primary-dark transition-colors"
-                        aria-label="Next testimonial"
-                    >
-                        <ChevronRight className="w-5 h-5" />
-                    </button>
-                </div>
-
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 1.4, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                    className="mt-20 flex flex-col items-center"
+                >
+                    <div className="w-[1px] h-16 bg-[#FAFAFA] opacity-30 mb-8" />
+                    <p className="font-hero text-2xl md:text-3xl text-[#FAFAFA] italic">Deepa</p>
+                    <p className="text-[0.55rem] uppercase tracking-[0.3em] text-[#FAFAFA] opacity-50 mt-4">Founder & Experience Curator</p>
+                </motion.div>
             </div>
         </section>
     );
 }
+

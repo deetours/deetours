@@ -1,40 +1,41 @@
 import { Hero } from "@/components/hero";
 import { StoryBlock } from "@/components/story-block";
-import { Categories } from "@/components/categories";
+import { HowItWorks } from "@/components/how-it-works";
 import { FeaturedTrips } from "@/components/featured-trips";
 import { Testimonials } from "@/components/testimonials";
-import { Transformation } from "@/components/transformation";
-import { CTA } from "@/components/cta";
+import { TrustMetrics } from "@/components/trust-metrics";
+import { RealTestimonials } from "@/components/real-testimonials";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-background">
+    <main className="min-h-screen bg-background transition-colors duration-500">
       <Navigation />
 
-      {/* ACT 1 */}
+      {/* The Origin: Split Narrative Hero */}
       <Hero />
 
-      {/* ACT 2 & 3: The Connected Narrative */}
+      {/* The Argument: Asymmetrical Friction List */}
       <StoryBlock />
 
-      {/* ACT 4 */}
-      <Categories />
+      {/* The Process: How It Works */}
+      <HowItWorks />
 
-      {/* ACT 5 */}
+      {/* The Evidence: Archival Collection Bento */}
       <FeaturedTrips />
 
-      {/* ACT 6 */}
+      {/* The Anchor: Founder Trust Scape */}
       <Testimonials />
 
-      {/* ACT 7 */}
-      <Transformation />
+      {/* Trust Metrics Strip */}
+      <TrustMetrics />
 
-      {/* ACT 8 */}
-      <CTA />
+      {/* Real Customer Social Proof */}
+      <RealTestimonials />
 
       <Footer />
     </main>
   );
 }
+

@@ -38,3 +38,4 @@ export function useMagnetic(intensity: number = 0.5) {
 
     return ref;
 }
+

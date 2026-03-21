@@ -161,3 +161,4 @@ export function BookingSheet({ isOpen, onClose, trip }: BookingSheetProps) {
         </AnimatePresence>
     );
 }
+
