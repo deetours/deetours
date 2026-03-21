@@ -1,5 +1,6 @@
 export interface Trip {
-    id: string;
+    id?: string;
+    _id?: string;
     title: string;
     destination: string;
     duration: string; // e.g., "7 Days"
