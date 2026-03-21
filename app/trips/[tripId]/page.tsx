@@ -14,7 +14,7 @@ export default function TripDetailPage() {
     const params = useParams();
     const tripIdStr = typeof params.tripId === "string" ? params.tripId : params.tripId?.[0];
     const liveTrips = useQuery(api.trips.getTrips) || [];
-    const trip = liveTrips.find((t: any) => t.id === tripIdStr);
+    const trip = liveTrips.find((t: any) => t._id === tripIdStr);
 
     // Parallax for Hero
     const { scrollYProgress } = useScroll();

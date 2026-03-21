@@ -29,7 +29,7 @@ export function BentoCard({ trip, layoutType, index = 0 }: { trip: Trip; layoutT
             transition={{ duration: 1.2, delay: index * 0.2, ease: [0.16, 1, 0.3, 1] }}
             className={`group relative flex flex-col cursor-pointer active-scale shadow-[var(--shadow-harsh)] border border-border-subtle transition-all duration-700 ${isHero ? "h-[600px] lg:h-[800px] md:col-span-8" : "h-[380px] lg:h-[380px] md:col-span-4"}`}
         >
-            <Link href={`/trips/${trip._id || trip.id}`} className="absolute inset-0 z-30">
+            <Link href={`/trips/${trip._id}`} className="absolute inset-0 z-30">
                 <span className="sr-only">View {trip.title} details</span>
             </Link>
 
