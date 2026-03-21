@@ -6,14 +6,15 @@ export interface Trip {
     duration: string; // e.g., "7 Days"
     price: number;
     imageUrl: string;
-    category: 'adventure' | 'spiritual' | 'luxury' | 'leisure';
-    rating: number;
-    reviewsCount: number;
+    category: string;
+    rating?: number;
+    reviewsCount?: number;
     description?: string;
     itinerary?: { day: number; title: string; description: string; image: string }[];
     gallery?: string[];
     included?: string[];
     faq?: { question: string; answer: string }[];
+    isPublished?: boolean;
 }
 
 export interface Testimonial {

@@ -1,4 +1,5 @@
 import { httpRouter } from "convex/server";
+import { httpAction } from "./_generated/server";
 
 const http = httpRouter();
 
@@ -6,7 +7,7 @@ const http = httpRouter();
 http.route({
   path: "/clerk",
   method: "POST",
-  handler: async (ctx, request) => {
+  handler: httpAction(async (ctx, request) => {
     // Basic handler structure for Clerk Webhook
     // Note: In production you MUST verify the webhook signature using svix
     const payloadString = await request.text();
@@ -38,7 +39,7 @@ http.route({
     }
 
     return new Response("Webhook received", { status: 200 });
-  },
+  }),
 });
 
 export default http;
