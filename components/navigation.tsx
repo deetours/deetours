@@ -115,13 +115,13 @@ export function Navigation() {
                             <X className="w-6 h-6" />
                         </button>
                         
-                        <div className="flex flex-col gap-12 text-4xl md:text-6xl font-hero z-10 relative">
+                        <div className="flex flex-col gap-6 md:gap-12 text-[clamp(2rem,8vw,4rem)] md:text-6xl font-hero z-10 relative">
                             {[{ label: "The Origin", href: "/" }, ...links].map((link, i) => (
                                 <motion.div
                                     key={link.href}
                                     initial={{ y: 40, opacity: 0 }}
                                     animate={{ y: 0, opacity: 1 }}
-                                    transition={{ delay: 0.3 + (i * 0.1), duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                                    transition={{ delay: 0.2 + (i * 0.1), duration: 1, ease: [0.16, 1, 0.3, 1] }}
                                 >
                                     <Link
                                         href={link.href}
@@ -132,6 +132,33 @@ export function Navigation() {
                                     </Link>
                                 </motion.div>
                             ))}
+                            
+                            {/* Mobile Auth Button */}
+                            <motion.div
+                                initial={{ y: 40, opacity: 0 }}
+                                animate={{ y: 0, opacity: 1 }}
+                                transition={{ delay: 0.8, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                                className="mt-8 md:hidden"
+                            >
+                                {isLoaded && !userId && (
+                                    <Link 
+                                        href="/sign-in" 
+                                        onClick={() => setMobileMenuOpen(false)}
+                                        className="inline-flex items-center justify-center text-xs uppercase tracking-[0.3em] font-sans text-background bg-foreground px-8 py-4 rounded-full"
+                                    >
+                                        Archive Access
+                                    </Link>
+                                )}
+                                {isLoaded && userId && (
+                                    <Link 
+                                        href="/dashboard" 
+                                        onClick={() => setMobileMenuOpen(false)}
+                                        className="inline-flex items-center justify-center text-xs uppercase tracking-[0.3em] font-sans text-foreground border border-border-subtle hover:bg-foreground hover:text-background transition-colors px-8 py-4 rounded-full"
+                                    >
+                                        Admin Dashboard
+                                    </Link>
+                                )}
+                            </motion.div>
                         </div>
                     </motion.div>
                 )}
